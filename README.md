@@ -11,7 +11,7 @@ enabling seamless remote access and collaboration. With SkyDesk, users can contr
 - Harshana Wijerathne
 
 ### Version
-0.0.0
+0.1.0
 
 ### License
 Copyright &copy; 2025 SkyDesk. All Rights Reserved.
