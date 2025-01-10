@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ClientScreenShare extends Application {
+public class ScreenShareInitializer extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -15,8 +15,11 @@ public class ClientScreenShare extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/ScreenShareScene.fxml"))));
+        primaryStage.setTitle("Skydesk");
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/Ui.fxml"))));
         primaryStage.show();
+
+
 
 
     }
