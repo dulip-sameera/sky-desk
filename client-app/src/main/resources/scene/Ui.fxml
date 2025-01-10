@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="474.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.UiController">
+   <children>
+      <Button fx:id="btnScreenShare" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnScreenShareOnAction" prefHeight="45.0" prefWidth="168.0" text="Screen Share">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
