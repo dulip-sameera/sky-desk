@@ -2,26 +2,34 @@ package com.skydesk.server;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.Key;
 
 public class ServerControlAppInitializer {
     public static void main(String[] args) throws IOException {
 
-        ServerSocket serverSocket = new ServerSocket(9090);
+        ServerSocket serverSocket;
+        try {
+            serverSocket = new ServerSocket(9090);
+        } catch (BindException e) {
+            System.out.println("Server is already running");
+            serverSocket = new ServerSocket(0);
+            System.out.println("Instead, server started on port " + serverSocket.getLocalPort());
+
+        }
         System.out.println("Server started");
+        System.out.println("Waiting for connection");
         while (true) {
-            System.out.println("Waiting for connection");
             Socket localSocket = serverSocket.accept();
             System.out.println("Client connected from " + localSocket.getRemoteSocketAddress());
 
             new Thread(() -> {
                 try {
                     OutputStream os = localSocket.getOutputStream();
-//                    System.out.println(os.toString());
                     BufferedOutputStream bos = new BufferedOutputStream(os);
                     ObjectOutputStream oos = new ObjectOutputStream(bos);
 
@@ -42,41 +50,55 @@ public class ServerControlAppInitializer {
             }).start();
 
             new Thread(() -> {
+                System.out.println("Entered to a new Thread");
                 try {
-                    InputStream isCoords = localSocket.getInputStream();
-                    BufferedInputStream bisCoords = new BufferedInputStream(isCoords);
-                    ObjectInputStream oisCoords = new ObjectInputStream(bisCoords);
+                    InputStream is = localSocket.getInputStream();
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    ObjectInputStream ois = new ObjectInputStream(bis);
+                    System.out.println("created output stream");
 
                     Robot robot = new Robot();
-                    while (true) {
-                        Point coordinates = (Point) oisCoords.readObject();
-                        robot.mouseMove(coordinates.x, coordinates.y);
-                    }
 
+                    while (true) {
+                        Object received = ois.readObject();
+
+                        if (received instanceof Point) {
+                            Point coordinates = (Point) received;
+                            robot.mouseMove(coordinates.x, coordinates.y);
+
+                        } else if (received instanceof String) {
+                            String keyText = (String) received;
+//                            char keyText = (char) keyCode;
+
+//                            String keyText = KeyEvent.getKeyText(keyCode);
+                            System.out.print(keyText);
+
+                            // If the key represents a letter or number, use Robot to type it
+                            robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(keyText.charAt(0)));
+                            robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(keyText.charAt(0))); // Always release the key after pressing
+
+//                        } else if (received instanceof String) {
+//                           String mouseClick = (String) received;
+//                           System.out.println("Mouse clicked: " + mouseClick);
+//
+//                            if ("PRIMARY".equals(mouseClick)) { // Left button
+//                                robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//                                robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//                            } else if ("SECONDARY".equals(mouseClick)) { // Right button
+//                                robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+//                                robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+//                            } else if ("MIDDLE".equals(mouseClick)) { // Middle button
+//                                robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
+//                                robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+//                            }
+
+                        }
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }).start();
 
-            new Thread(() -> {
-
-                try {
-                    InputStream isKeys = localSocket.getInputStream();
-                    BufferedInputStream bisKeys = new BufferedInputStream(isKeys);
-                    ObjectInputStream oisKeys = new ObjectInputStream(bisKeys);
-
-                    Robot robot = new Robot();
-
-                    while (true) {
-                        Key keys = (Key) oisKeys.readObject();
-                        robot.keyPress(keys.hashCode());
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }).start();
         }
 
 
