@@ -1,6 +1,5 @@
-package com.skydesk.client;
+package com.skydesk.server;
 
-import com.skydesk.client.controller.ScreenShareSceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ScreenShareInitializer extends Application {
+public class Server extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,15 +15,9 @@ public class ScreenShareInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("Skydesk");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/Ui.fxml"))));
+        primaryStage.setTitle("Skydesk Server");
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/ServerScene.fxml"))));
         primaryStage.show();
-
-
-
-
-
-
 
     }
 }

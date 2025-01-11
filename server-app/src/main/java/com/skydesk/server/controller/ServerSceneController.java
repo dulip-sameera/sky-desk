@@ -1,18 +1,36 @@
-package com.skydesk.server;
+package com.skydesk.server.controller;
 
-import javafx.scene.input.MouseButton;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerAppInitializer {
-    public static void main(String[] args) throws Exception {
-        ServerSocket serverSocket = new ServerSocket(9090);
+public class ServerSceneController {
+    public Label lblServerStarted;
+    public AnchorPane root;
+    public Button btnStartServer;
+    private ServerSocket serverSocket;
+
+    public void initialize() {
+
+    }
+
+    public void btnStartServerOnAction(ActionEvent actionEvent) throws Exception {
+        startServer();
+
+    }
+
+    public void startServer() throws Exception {
+
+        serverSocket = new ServerSocket(9090);
+        lblServerStarted.setText("Server started");
         System.out.println("Server started on port 9090");
         System.out.println("Waiting for connections...");
         Socket localSocket = serverSocket.accept();
@@ -22,16 +40,11 @@ public class ServerAppInitializer {
                 OutputStream os = localSocket.getOutputStream();
                 BufferedOutputStream bos = new BufferedOutputStream(os);
                 ObjectOutputStream oos = new ObjectOutputStream(bos);
-                BufferedImage screen;
-                screen = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-                oos.writeObject(screen.getWidth());
-                oos.writeObject(screen.getHeight());
 
 
                 while (true) {
                     Robot robot = new Robot();
-                    screen = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-
+                    BufferedImage screen = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(screen, "jpeg", baos);
                     oos.writeObject(baos.toByteArray());
@@ -44,7 +57,6 @@ public class ServerAppInitializer {
 
         }).start();
 
-
         new Thread(() -> {
             try{
                 InputStream is = localSocket.getInputStream();
@@ -53,27 +65,13 @@ public class ServerAppInitializer {
 
                 Robot robot = new Robot();
                 while (true) {
-                    Object button = ois.readObject();
-                    if(button instanceof Point coordinates) {
-                        robot.mouseMove(coordinates.x, coordinates.y);
-                    }else if(button.toString().equals("PRIMARY")) {
-                        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-                    }else if(button.toString().equals("SECONDARY")) {
-                        robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
-                    }
-
-
+                    Point coordinates = (Point) ois.readObject();
+                    robot.mouseMove(coordinates.x, coordinates.y);
                 }
 
             }catch (Exception e){
                 e.printStackTrace();
             }
         }).start();
-
-
-
     }
-
 }
