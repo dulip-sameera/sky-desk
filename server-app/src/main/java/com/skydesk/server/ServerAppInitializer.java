@@ -1,7 +1,5 @@
 package com.skydesk.server;
 
-import javafx.scene.input.MouseButton;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -22,6 +20,7 @@ public class ServerAppInitializer {
                 OutputStream os = localSocket.getOutputStream();
                 BufferedOutputStream bos = new BufferedOutputStream(os);
                 ObjectOutputStream oos = new ObjectOutputStream(bos);
+
                 BufferedImage screen;
                 screen = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
                 oos.writeObject(screen.getWidth());
@@ -36,7 +35,7 @@ public class ServerAppInitializer {
                     ImageIO.write(screen, "jpeg", baos);
                     oos.writeObject(baos.toByteArray());
                     oos.flush();
-                    Thread.sleep(1000/27);
+                    Thread.sleep(1000 / 27);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -44,36 +43,55 @@ public class ServerAppInitializer {
 
         }).start();
 
-
         new Thread(() -> {
-            try{
+            try {
                 InputStream is = localSocket.getInputStream();
                 BufferedInputStream bis = new BufferedInputStream(is);
                 ObjectInputStream ois = new ObjectInputStream(bis);
 
                 Robot robot = new Robot();
+                boolean dragging = false;
+
                 while (true) {
-                    Object button = ois.readObject();
-                    if(button instanceof Point coordinates) {
+                    Object event = ois.readObject();
+
+                    if (event instanceof Point coordinates) {
                         robot.mouseMove(coordinates.x, coordinates.y);
-                    }else if(button.toString().equals("PRIMARY")) {
-                        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-                    }else if(button.toString().equals("SECONDARY")) {
-                        robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+                    } else if (event instanceof String button) {
+                        switch (button) {
+                            case "PRIMARY_PRESS":
+                                robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                                dragging = true;
+                                break;
+                            case "PRIMARY_RELEASE":
+                                robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                                dragging = false;
+                                break;
+                            case "SECONDARY_PRESS":
+                                robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+                                break;
+                            case "SECONDARY_RELEASE":
+                                robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+                                break;
+                            case "MIDDLE_PRESS":
+                                robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
+                                break;
+                            case "MIDDLE_RELEASE":
+                                robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+                                break;
+                        }
+                    } else if (event instanceof Double scrollAmount) {
+                        robot.mouseWheel((int) (double) scrollAmount);
+                    } else if (event instanceof Point dragEvent) {
+                        if (dragging) {
+                            robot.mouseMove(dragEvent.x, dragEvent.y);
+                        }
                     }
-
-
                 }
-
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
 
-
-
     }
-
 }
