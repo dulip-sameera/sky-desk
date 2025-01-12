@@ -19,14 +19,14 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TreeView fx:id="trvwRemoteFileSystem" prefHeight="277.0" prefWidth="319.0" />
+            <TreeView fx:id="trRemoteFileSystem" prefHeight="277.0" prefWidth="319.0" />
             <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#btnDownloadOnAction" prefHeight="26.0" prefWidth="261.0" text="Download">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
             <Separator prefWidth="200.0" />
-            <AnchorPane fx:id="anchrpnDropTarget" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DCDCDC; -fx-background-radius: 10;">
+            <AnchorPane fx:id="pnDropTarget" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DCDCDC; -fx-background-radius: 10;">
                <children>
                   <ImageView fx:id="imgDrop" fitHeight="200.0" fitWidth="309.0" pickOnBounds="true" preserveRatio="true" />
                </children>
