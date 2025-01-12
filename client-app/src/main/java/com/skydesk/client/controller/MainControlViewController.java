@@ -1,5 +1,6 @@
 package com.skydesk.client.controller;
 
+import com.skydesk.shared.MouseClick;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -79,6 +80,7 @@ public class MainControlViewController {
         ObjectOutputStream oosTouch = new ObjectOutputStream(bosTouch);
 
         String clickType = mouseEvent.getButton().toString();
+//        new MouseClick(clickType,(int) mouseEvent.getScreenX(),(int) mouseEvent.getScreenY());
         System.out.println("Click Type: " + clickType);
         oosTouch.writeObject(clickType);
         oosTouch.flush();
