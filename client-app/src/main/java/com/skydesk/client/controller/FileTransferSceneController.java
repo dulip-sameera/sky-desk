@@ -1,6 +1,5 @@
 package com.skydesk.client.controller;
 
-import com.skydesk.shared.protocol.FileShareProtocol;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,10 +33,7 @@ public class FileTransferSceneController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         File file = fileChooser.showOpenDialog(root.getScene().getWindow());
-        if (file == null) {return;}
-        System.out.println(file.getName());
-        System.out.println(file.length());
-        FileShareProtocol fileShareProtocol = new FileShareProtocol();
+
     }
 
     public void btnUploadOnAction(ActionEvent actionEvent) {
