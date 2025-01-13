@@ -19,7 +19,7 @@ public class FileTransferAppInitializer extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("FileTransfer");
         try {
-            primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/FileTranferScene.fxml"))));
+            primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/FileTransferScene.fxml"))));
         } catch (IOException e) {
             System.err.println("Error loading the FXML file: " + e.getMessage());
             e.printStackTrace();

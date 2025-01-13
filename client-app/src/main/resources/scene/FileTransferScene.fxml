@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="857.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.FileTransferSceneController">
+   <children>
+      <VBox alignment="CENTER" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label fx:id="lblRemote" alignment="CENTER" text="Remote">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TreeView fx:id="trRemoteFileSystem" prefHeight="277.0" prefWidth="319.0" />
+            <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#btnDownloadOnAction" prefHeight="26.0" prefWidth="261.0" text="Download">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Separator prefWidth="200.0" />
+            <StackPane fx:id="pnDropTarget" onDragDropped="#pnDropTargetOnDragDropped" onDragEntered="#pnDropTargetOnDragEntered" onDragExited="#pnDropTargetOnDragExited" onDragOver="#pnDropTargetOnDragOver" prefHeight="172.0" prefWidth="309.0" style="-fx-background-color: #DCDCDC; -fx-background-radius: 10;">
+               <children>
+                  <ImageView fx:id="imgDrop" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="309.0">
+               <children>
+                  <Label fx:id="lblFileName" alignment="CENTER" prefHeight="34.0" prefWidth="309.0" text="File Name">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="btnSelectFile" layoutX="34.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnSelectFileOnAction" prefHeight="26.0" prefWidth="261.0" text="Select File">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnUpload" layoutX="34.0" layoutY="594.0" mnemonicParsing="false" onAction="#btnUploadOnAction" prefHeight="26.0" prefWidth="261.0" text="Upload">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRemoveUpload" layoutX="34.0" layoutY="668.0" mnemonicParsing="false" onAction="#btnRemoveUploadOnAction" prefHeight="26.0" prefWidth="261.0" text="Remove">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Separator prefWidth="200.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
