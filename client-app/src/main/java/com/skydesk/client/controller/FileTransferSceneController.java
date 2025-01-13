@@ -1,17 +1,20 @@
 package com.skydesk.client.controller;
 
+import com.skydesk.client.util.Icons;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 public class FileTransferSceneController {
     public AnchorPane root;
@@ -22,8 +25,21 @@ public class FileTransferSceneController {
     public ImageView imgDrop;
     public Button btnSelectFile;
     public Button btnUpload;
+    public Button btnRemoveUpload;
+    public Label lblFileName;
 
     private File selectedFile;
+    private final static int MAX_ACCEPTABLE_FILE_COUNT = 1;
+    private final String LBL_FILE_NAME_INITIAL_TEXT = "Drag & Drop or Select a File";
+
+    public void initialize() {
+        Image uploadImage = new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD));
+        imgDrop.setImage(uploadImage);
+        lblFileName.setText(LBL_FILE_NAME_INITIAL_TEXT);
+        imgDrop.setOpacity(0.2);
+        btnUpload.setDisable(true);
+
+    }
 
     public void btnSelectFileOnAction(ActionEvent actionEvent) {
         File initialDirectory = new File(System.getProperty("user.home"));
@@ -44,6 +60,7 @@ public class FileTransferSceneController {
             alertPermissionDenied();
             return;
         }
+        updateFileTransferUI(file);
         selectedFile = file;
 
     }
@@ -60,23 +77,85 @@ public class FileTransferSceneController {
         alert.setHeaderText("Permission Denied");
         alert.setContentText("You do not have permission to upload the file.");
         alert.showAndWait();
+
     }
 
     public void pnDropTargetOnDragOver(DragEvent dragEvent) {
-        System.out.println("Drag over");
+        Dragboard dragboard = dragEvent.getDragboard();
+        List<File> files = dragboard.getFiles();
 
+        if (files == null && files.isEmpty()) {
+            return;
+        }
+
+        // don't accept if multiple files are dragged
+        if (files.size() > MAX_ACCEPTABLE_FILE_COUNT) {
+            return;
+        }
+
+        // don't accept if it's a directory
+        for (File file : files) {
+            if (file.isDirectory()) return;
+        }
+
+        System.out.println(files);
         dragEvent.acceptTransferModes(TransferMode.COPY);
+
     }
 
     public void pnDropTargetOnDragEntered(DragEvent dragEvent) {
-        System.out.println("Drag entered");
+        imgDrop.setOpacity(.6);
+
     }
 
     public void pnDropTargetOnDragExited(DragEvent dragEvent) {
-        System.out.println("Drag exited");
+        imgDrop.setOpacity(.2);
+
     }
 
     public void pnDropTargetOnDragDropped(DragEvent dragEvent) {
-        System.out.println("Drag dropped");
+        selectedFile = dragEvent.getDragboard().getFiles().getFirst();
+        updateFileTransferUI(selectedFile);
+
+    }
+
+    private void updateFileTransferUI(File file) {
+        final String MIME_TYPE_PDF = "application/pdf";
+        final String[] MIME_TYPE_IMAGES = {"image/jpeg", "image/jpg", "image/gif", "image/bmp", "image/webp", "image/png"};
+        try {
+            String fileMimeType = Files.probeContentType(file.toPath());
+            System.out.println("MIME TYPE : " + fileMimeType);
+            if (fileMimeType == null) {
+                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.DEFAULT)));
+            }else if (MIME_TYPE_PDF.equals(fileMimeType)) {
+                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_PDF)));
+            } else if (isImage(fileMimeType, MIME_TYPE_IMAGES)) {
+                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_IMAGE)));
+            } else {
+                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.DEFAULT)));
+            }
+        } catch (IOException e) {
+            System.err.println("Error while getting file type: " + e.getMessage());
+        }
+        btnUpload.setDisable(false);
+        lblFileName.setText(file.getName());
+        lblFileName.setTooltip(new Tooltip(file.getName()));
+
+    }
+
+    private boolean isImage(String mimeType, String[] imgMimeTypes) {
+        for (String imgMimeType : imgMimeTypes) {
+            if (mimeType.equals(imgMimeType)) return true;
+        }
+        return false;
+
+    }
+
+    public void btnRemoveUploadOnAction(ActionEvent actionEvent) {
+        btnUpload.setDisable(true);
+        lblFileName.setText(LBL_FILE_NAME_INITIAL_TEXT);
+        selectedFile = null;
+        imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD)));
+
     }
 }
