@@ -1,6 +1,7 @@
 package com.skydesk.client;
 
 import com.skydesk.client.controller.ScreenShareSceneController;
+import com.skydesk.shared.util.DesktopColor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,14 +18,15 @@ public class ScreenShareInitializer extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Skydesk");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/Ui.fxml"))));
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/ScreenShareScene.fxml"))));
         primaryStage.show();
+        primaryStage.setFullScreen(false);
 
+    }
 
-
-
-
-
-
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        DesktopColor.revertDesktop();
     }
 }

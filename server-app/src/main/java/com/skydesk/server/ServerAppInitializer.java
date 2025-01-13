@@ -1,5 +1,7 @@
 package com.skydesk.server;
 
+import com.skydesk.shared.util.DesktopColor;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -15,6 +17,10 @@ public class ServerAppInitializer {
         System.out.println("Waiting for connections...");
         Socket localSocket = serverSocket.accept();
         System.out.println("Accepted Connection from " + localSocket.getRemoteSocketAddress());
+
+        DesktopColor.changeDesktopColor("yellow");
+
+
         new Thread(() -> {
             try {
                 OutputStream os = localSocket.getOutputStream();

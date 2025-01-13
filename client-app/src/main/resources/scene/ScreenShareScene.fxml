@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="597.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.ScreenShareSceneController">
+<AnchorPane fx:id="root" prefHeight="808.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.ScreenShareSceneController">
    <children>
-      <ImageView fx:id="imgScreen" fitHeight="597.0" fitWidth="995.0" layoutX="-2.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane layoutY="40.0" style="-fx-background-color: yellow;" AnchorPane.topAnchor="40.0">
+         <children>
+            <ImageView fx:id="imgScreen" fitHeight="768.0" fitWidth="1366.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <AnchorPane layoutY="7.0" style="-fx-background-color: skyblue;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fitHeight="25.0" fitWidth="32.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/img/burger1.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="41.0" layoutY="1.0" prefHeight="25.0" prefWidth="502.0" text="Connected to: 000,000,000:" AnchorPane.leftAnchor="41.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="553.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Disconnect" AnchorPane.leftAnchor="553.0" />
+            <Label layoutX="666.0" layoutY="4.0" prefHeight="18.0" prefWidth="249.0" />
+            <Button layoutX="925.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Video Chat" AnchorPane.rightAnchor="349.0" />
+            <Button layoutX="1027.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Text Chat" AnchorPane.rightAnchor="249.0" />
+            <Button layoutX="1128.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="File Download" AnchorPane.rightAnchor="127.0" />
+            <Button layoutX="1249.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="File Upload" AnchorPane.rightAnchor="11.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
