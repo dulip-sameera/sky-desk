@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="root" prefHeight="857.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.FileTransferSceneController">
    <children>
       <VBox alignment="CENTER" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
@@ -26,7 +25,7 @@
                </font>
             </Button>
             <Separator prefWidth="200.0" />
-            <AnchorPane fx:id="pnDropTarget" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DCDCDC; -fx-background-radius: 10;">
+            <AnchorPane fx:id="pnDropTarget" onDragDropped="#pnDropTargetOnDragDropped" onDragEntered="#pnDropTargetOnDragEntered" onDragExited="#pnDropTargetOnDragExited" onDragOver="#pnDropTargetOnDragOver" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DCDCDC; -fx-background-radius: 10;">
                <children>
                   <ImageView fx:id="imgDrop" fitHeight="200.0" fitWidth="309.0" pickOnBounds="true" preserveRatio="true" />
                </children>
