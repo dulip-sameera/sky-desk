@@ -68,12 +68,9 @@ public class ServerControlAppInitializer {
 
                         } else if (received instanceof String) {
                             String keyText = (String) received;
-//                            char keyText = (char) keyCode;
-
 //                            String keyText = KeyEvent.getKeyText(keyCode);
                             System.out.print(keyText);
 
-                            // If the key represents a letter or number, use Robot to type it
                             robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(keyText.charAt(0)));
                             robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(keyText.charAt(0))); // Always release the key after pressing
 

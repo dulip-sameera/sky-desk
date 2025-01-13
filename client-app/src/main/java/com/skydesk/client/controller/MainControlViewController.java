@@ -21,6 +21,11 @@ public class MainControlViewController {
         imageScene.fitWidthProperty().bind(root.widthProperty());
         imageScene.fitHeightProperty().bind(root.heightProperty());
 
+        txtInput.prefWidthProperty().bind(root.widthProperty());
+        txtInput.prefWidthProperty().bind(root.heightProperty());
+
+
+
         socket = new Socket("127.0.0.1", 9090);
         System.out.println("Connected Successfully");
 
@@ -75,15 +80,15 @@ public class MainControlViewController {
 
     public void imageSceneOnMouseClicked(MouseEvent mouseEvent) throws IOException {
 
-        OutputStream osTouch = socket.getOutputStream();
-        BufferedOutputStream bosTouch = new BufferedOutputStream(osTouch);
-        ObjectOutputStream oosTouch = new ObjectOutputStream(bosTouch);
-
-        String clickType = mouseEvent.getButton().toString();
-//        new MouseClick(clickType,(int) mouseEvent.getScreenX(),(int) mouseEvent.getScreenY());
-        System.out.println("Click Type: " + clickType);
-        oosTouch.writeObject(clickType);
-        oosTouch.flush();
+//        OutputStream osTouch = socket.getOutputStream();
+//        BufferedOutputStream bosTouch = new BufferedOutputStream(osTouch);
+//        ObjectOutputStream oosTouch = new ObjectOutputStream(bosTouch);
+//
+//        String clickType = mouseEvent.getButton().toString();
+////        new MouseClick(clickType,(int) mouseEvent.getScreenX(),(int) mouseEvent.getScreenY());
+//        System.out.println("Click Type: " + clickType);
+//        oosTouch.writeObject(clickType);
+//        oosTouch.flush();
 
     }
 }
