@@ -1,6 +1,7 @@
 package com.skydesk.client.controller;
 
 import com.skydesk.client.util.Icons;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -32,6 +34,8 @@ public class FileTransferSceneController {
     private File selectedFile;
     private final static int MAX_ACCEPTABLE_FILE_COUNT = 1;
     private final String LBL_FILE_NAME_INITIAL_TEXT = "Drag & Drop or Select a File";
+    private String SERVER_HOST = "127.0.0.1";
+    private int SERVER_PORT = 8080;
 
     public void initialize() {
         imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD)));
@@ -72,6 +76,16 @@ public class FileTransferSceneController {
     }
 
     public void btnUploadOnAction(ActionEvent actionEvent) {
+        Task<Void> task = new Task<>(){
+
+            @Override
+            protected Void call() throws Exception {
+                Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
+                
+            }
+        };
+
+        new Thread(task).start();
     }
 
     public void btnDownloadOnAction(ActionEvent actionEvent) {
