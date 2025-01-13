@@ -39,6 +39,12 @@ public class FileTransferSceneController {
         imgDrop.setOpacity(0.2);
         btnUpload.setDisable(true);
 
+        // Will increase the width when the parent's width increases
+        btnUpload.setMaxWidth(Double.MAX_VALUE);
+        btnDownload.setMaxWidth(Double.MAX_VALUE);
+        btnRemoveUpload.setMaxWidth(Double.MAX_VALUE);
+        btnSelectFile.setMaxWidth(Double.MAX_VALUE);
+
     }
 
     public void btnSelectFileOnAction(ActionEvent actionEvent) {
@@ -98,7 +104,6 @@ public class FileTransferSceneController {
             if (file.isDirectory()) return;
         }
 
-        System.out.println(files);
         dragEvent.acceptTransferModes(TransferMode.COPY);
 
     }
