@@ -16,7 +16,7 @@ public class ClientControlAppInitializer extends Application {
         Scene mainScene = new Scene(FXMLLoader.load(getClass().getResource("/scene/MainControlView.fxml")));
         primarystage.setScene(mainScene);
         primarystage.setTitle("Control Desktop");
-        primarystage.setResizable(true);
+        primarystage.setResizable(false);
         primarystage.show();
         primarystage.centerOnScreen();
     }

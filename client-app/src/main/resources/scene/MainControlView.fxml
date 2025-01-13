@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.MainControlViewController">
    <children>
-      <ImageView fx:id="imageScene" fitHeight="386.0" fitWidth="583.0" layoutX="8.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageScene" fitHeight="405.0" fitWidth="616.0" layoutX="-9.0" onMouseClicked="#imageSceneOnMouseClicked" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="txtInput" layoutX="123.0" layoutY="90.0" opacity="0.0" prefHeight="210.0" prefWidth="353.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></TextField>
    </children>
 </AnchorPane>
