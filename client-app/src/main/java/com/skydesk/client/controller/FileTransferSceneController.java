@@ -9,6 +9,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -21,7 +22,7 @@ public class FileTransferSceneController {
     public Label lblRemote;
     public TreeView trRemoteFileSystem;
     public Button btnDownload;
-    public AnchorPane pnDropTarget;
+    public StackPane pnDropTarget;
     public ImageView imgDrop;
     public Button btnSelectFile;
     public Button btnUpload;
@@ -33,8 +34,7 @@ public class FileTransferSceneController {
     private final String LBL_FILE_NAME_INITIAL_TEXT = "Drag & Drop or Select a File";
 
     public void initialize() {
-        Image uploadImage = new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD));
-        imgDrop.setImage(uploadImage);
+        imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD)));
         lblFileName.setText(LBL_FILE_NAME_INITIAL_TEXT);
         imgDrop.setOpacity(0.2);
         btnUpload.setDisable(true);
@@ -125,20 +125,24 @@ public class FileTransferSceneController {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             System.out.println("MIME TYPE : " + fileMimeType);
+            String iconPath = "";
             if (fileMimeType == null) {
-                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.DEFAULT)));
+                iconPath = Icons.getPath(Icons.IconType.DEFAULT);
             }else if (MIME_TYPE_PDF.equals(fileMimeType)) {
-                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_PDF)));
+                iconPath = Icons.getPath(Icons.IconType.ICON_PDF);
             } else if (isImage(fileMimeType, MIME_TYPE_IMAGES)) {
-                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_IMAGE)));
+                iconPath = Icons.getPath(Icons.IconType.ICON_IMAGE);
             } else {
-                imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.DEFAULT)));
+                iconPath = Icons.getPath(Icons.IconType.DEFAULT);
             }
+            imgDrop.setImage(new Image(iconPath));
         } catch (IOException e) {
             System.err.println("Error while getting file type: " + e.getMessage());
         }
         btnUpload.setDisable(false);
+        pnDropTarget.setStyle("-fx-background-color: #72A0C1; -fx-background-radius: 10");
         lblFileName.setText(file.getName());
+        imgDrop.setOpacity(.6);
         lblFileName.setTooltip(new Tooltip(file.getName()));
 
     }
@@ -153,6 +157,7 @@ public class FileTransferSceneController {
 
     public void btnRemoveUploadOnAction(ActionEvent actionEvent) {
         btnUpload.setDisable(true);
+        pnDropTarget.setStyle("-fx-background-color:  #DCDCDC; -fx-background-radius: 10");
         lblFileName.setText(LBL_FILE_NAME_INITIAL_TEXT);
         selectedFile = null;
         imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD)));
