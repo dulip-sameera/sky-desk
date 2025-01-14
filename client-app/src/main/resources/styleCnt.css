@@ -1,0 +1,9 @@
+.styled-borders {
+    /*-fx-background-color: #FFFFFF;  !* White background *!*/
+    -fx-background-insets: 0, 1;    /* Adjust the insets for 3D effect */
+    -fx-background-radius: 15px;    /* Rounded corners with 15px radius */
+    /*-fx-border-color: #FFFFFF;      !* Light border color *!*/
+    -fx-border-width: 3px;          /* Border thickness */
+    -fx-border-radius: 15px;        /* Match the border radius with the background */
+    /*-fx-effect: innershadow(gaussian, #999999, 10, 0.5, 0, 0); !* 3D inner shadow effect *!*/
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane fx:id="rootMain" prefHeight="338.0" prefWidth="764.0" style="-fx-background-color: #0C090A;" stylesheets="@../styleCnt.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skydesk.client.controller.ClientSceneViewController">
+   <children>
+      <TextField fx:id="txtInput" layoutX="240.0" layoutY="96.0" opacity="0.0" prefHeight="122.0" prefWidth="274.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></TextField>
+      <AnchorPane fx:id="root" layoutX="144.0" prefHeight="338.0" prefWidth="504.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0">
+         <children>
+            <ImageView fx:id="imageScene" fitHeight="135.0" fitWidth="366.0" onMouseClicked="#imageSceneOnMouseClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <Pane prefHeight="319.0" prefWidth="115.0" style="-fx-border-color: #8FBC8F;" styleClass="styled-borders" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="644.0" AnchorPane.topAnchor="5.0" />
+      <Pane layoutX="644.0" layoutY="202.0" prefHeight="135.0" prefWidth="115.0" style="-fx-border-color: #EB5406;" styleClass="styled-borders" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Pane layoutX="624.0" layoutY="7.0" prefHeight="179.0" prefWidth="115.0" style="-fx-border-color: #43C6DB;" styleClass="styled-borders" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+   </children>
+</AnchorPane>
