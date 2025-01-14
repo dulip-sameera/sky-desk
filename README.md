@@ -5,7 +5,7 @@ enabling seamless remote access and collaboration. With SkyDesk, users can contr
 
 ### Contributors
 - Dulip Sameera
-- Sasika Dilum
+- Sasika Dilum Kalu
 - Anuk Fernando
 - Milinda Karunarathna
 - Harshana Wijerathne
