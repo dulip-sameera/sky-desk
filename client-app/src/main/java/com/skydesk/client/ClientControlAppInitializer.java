@@ -13,9 +13,9 @@ public class ClientControlAppInitializer extends Application {
     @Override
     public void start(Stage primarystage) throws Exception {
 
-        Scene mainScene = new Scene(FXMLLoader.load(getClass().getResource("/scene/MainControlView.fxml")));
+        Scene mainScene = new Scene(FXMLLoader.load(getClass().getResource("/scene/ClientControlView.fxml")));
         primarystage.setScene(mainScene);
-        primarystage.setTitle("Control Desktop");
+        primarystage.setTitle("SkyDesk");
         primarystage.setResizable(true);
         primarystage.show();
         primarystage.centerOnScreen();

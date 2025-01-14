@@ -1,0 +1,28 @@
+/* Example of a button style */
+.button {
+    -fx-background-color: #733635;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+
+/* Example of a label style */
+.label {
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333;
+}
+
+.styled-pane {
+    /*-fx-background-color: #FFFFFF;  !* White background *!*/
+    -fx-background-insets: 0, 1;    /* Adjust the insets for 3D effect */
+    -fx-background-radius: 15px;    /* Rounded corners with 15px radius */
+    -fx-border-color: #FFFFFF;      /* Light border color */
+    -fx-border-width: 2px;          /* Border thickness */
+    -fx-border-radius: 15px;        /* Match the border radius with the background */
+    /*-fx-effect: innershadow(gaussian, #999999, 10, 0.5, 0, 0); !* 3D inner shadow effect *!*/
+}
+
+.styled-pane:focused {
+    -fx-border-color: #4CAF50; /* Change the border color when focused (green) */
+    /*-fx-effect: innershadow(gaussian, #4CAF50, 15, 0.5, 0, 0); !* Focused 3D effect *!*/
+}

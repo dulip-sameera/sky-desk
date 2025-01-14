@@ -1,6 +1,5 @@
 package com.skydesk.client.controller;
 
-import com.skydesk.shared.MouseClick;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -11,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.*;
 import java.net.Socket;
 
-public class MainControlViewController {
+public class ClientSceneViewController {
     public AnchorPane root;
     public ImageView imageScene;
     public TextField txtInput;
