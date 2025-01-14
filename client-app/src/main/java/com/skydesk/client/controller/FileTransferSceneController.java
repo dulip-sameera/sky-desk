@@ -1,8 +1,7 @@
 package com.skydesk.client.controller;
 
-import com.skydesk.client.util.Icons;
 import com.skydesk.shared.protocol.FileShareProtocol;
-import javafx.concurrent.Task;
+import com.skydesk.shared.util.Icons;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -117,14 +116,11 @@ public class FileTransferSceneController {
     }
 
     public void btnDownloadOnAction(ActionEvent actionEvent) {
+
     }
 
-    private void alertPermissionDenied() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Permission Denied");
-        alert.setHeaderText("Permission Denied");
-        alert.setContentText("You do not have permission to upload the file.");
-        alert.showAndWait();
+    public void pnDropTargetOnDragEntered(DragEvent dragEvent) {
+        imgDrop.setOpacity(.6);
 
     }
 
@@ -150,19 +146,34 @@ public class FileTransferSceneController {
 
     }
 
-    public void pnDropTargetOnDragEntered(DragEvent dragEvent) {
-        imgDrop.setOpacity(.6);
-
-    }
-
     public void pnDropTargetOnDragExited(DragEvent dragEvent) {
-        imgDrop.setOpacity(.2);
+     if (!dragEvent.isDropCompleted()) imgDrop.setOpacity(.2);
 
     }
 
     public void pnDropTargetOnDragDropped(DragEvent dragEvent) {
         selectedFile = dragEvent.getDragboard().getFiles().getFirst();
         updateFileTransferUI(selectedFile);
+        dragEvent.setDropCompleted(true);
+
+    }
+
+    public void btnRemoveUploadOnAction(ActionEvent actionEvent) {
+        btnUpload.setDisable(true);
+        pnDropTarget.setStyle("-fx-background-color:  #DCDCDC; -fx-background-radius: 10");
+        lblFileName.setText(LBL_FILE_NAME_INITIAL_TEXT);
+        selectedFile = null;
+        imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD)));
+        imgDrop.setOpacity(.2);
+
+    }
+
+    private void alertPermissionDenied() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Permission Denied");
+        alert.setHeaderText("Permission Denied");
+        alert.setContentText("You do not have permission to upload the file.");
+        alert.showAndWait();
 
     }
 
@@ -202,12 +213,4 @@ public class FileTransferSceneController {
 
     }
 
-    public void btnRemoveUploadOnAction(ActionEvent actionEvent) {
-        btnUpload.setDisable(true);
-        pnDropTarget.setStyle("-fx-background-color:  #DCDCDC; -fx-background-radius: 10");
-        lblFileName.setText(LBL_FILE_NAME_INITIAL_TEXT);
-        selectedFile = null;
-        imgDrop.setImage(new Image(Icons.getPath(Icons.IconType.ICON_UPLOAD)));
-
-    }
 }
