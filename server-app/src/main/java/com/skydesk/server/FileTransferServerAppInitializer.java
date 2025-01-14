@@ -39,6 +39,6 @@ public class FileTransferServerAppInitializer extends Application {
     @Override
     public void stop() throws Exception {
         super.stop();
-        Server.close();
+        Server.stop();
     }
 }

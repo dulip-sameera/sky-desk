@@ -44,11 +44,7 @@ public class FileTransferServerSceneController {
         Thread serverThread = new Thread(() -> {
             File saveLocation = new File(System.getProperty("user.home") + "/Downloads/SkyDesk");
             saveLocation.mkdirs();
-            try {
-                Server.start(saveLocation);
-            } catch (IOException e) {
-                System.out.println("Connection Lost");
-            }
+            Server.start();
         });
         serverThread.setName("Server Thread");
         serverThread.start();
