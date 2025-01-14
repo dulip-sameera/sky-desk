@@ -35,7 +35,13 @@ public class ServerControlAppInitializer {
 
                     while (true) {
                         Robot robot = new Robot();
+
+
                         BufferedImage screen =  robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+//                        oos.writeObject(screen.getWidth());
+//                        oos.writeObject(screen.getHeight());
+
+
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         ImageIO.write(screen, "jpeg", baos);
                         oos.writeObject(baos.toByteArray());
