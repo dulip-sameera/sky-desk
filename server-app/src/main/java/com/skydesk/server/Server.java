@@ -76,7 +76,7 @@ public class Server {
         }
     }
 
-    private static void close() {
+    public static void close() {
         if (serverSocket != null) {
             try {
                 serverSocket.close();

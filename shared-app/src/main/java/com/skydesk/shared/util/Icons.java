@@ -1,4 +1,4 @@
-package com.skydesk.client.util;
+package com.skydesk.shared.util;
 
 public class Icons {
 

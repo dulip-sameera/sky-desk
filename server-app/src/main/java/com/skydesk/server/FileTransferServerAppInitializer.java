@@ -35,4 +35,10 @@ public class FileTransferServerAppInitializer extends Application {
         primaryStage.show();
         primaryStage.centerOnScreen();
     }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        Server.close();
+    }
 }
