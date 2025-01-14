@@ -31,7 +31,6 @@ public class Server {
             }
         }
         System.out.println("Server started on port " + serverSocket.getLocalPort());
-
         while (true) {
             System.out.println("Waiting for connection...");
             Socket localSocket = serverSocket.accept();

@@ -1,6 +1,7 @@
 package com.skydesk.client.controller;
 
 import com.skydesk.client.util.Icons;
+import com.skydesk.shared.protocol.FileShareProtocol;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -13,9 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -76,16 +77,43 @@ public class FileTransferSceneController {
     }
 
     public void btnUploadOnAction(ActionEvent actionEvent) {
-        Task<Void> task = new Task<>(){
+        try {
+            Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
+            OutputStream os = socket.getOutputStream();
+            BufferedOutputStream bos = new BufferedOutputStream(os);
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
 
-            @Override
-            protected Void call() throws Exception {
-                Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
-                
-            }
-        };
+            new Thread(() -> {
+                try {
+                    FileInputStream fis = new FileInputStream(selectedFile);
+                    BufferedInputStream bis = new BufferedInputStream(fis);
 
-        new Thread(task).start();
+                    String fileName = selectedFile.getName();
+                    long fileSize = selectedFile.length();
+                    while (true) {
+                        byte[] buffer = new byte[1024];
+                        int read = bis.read(buffer);
+                        if (read == -1) break;
+                        oos.writeObject(new FileShareProtocol(fileName, fileSize, buffer));
+                        oos.flush();
+                        btnUpload.setDisable(true);
+                    }
+                    btnUpload.setDisable(false);
+                } catch (FileNotFoundException e) {
+                    System.err.println("File Not Found");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    System.err.println("File error while uploading");
+                    e.printStackTrace();
+                }
+            }).start();
+
+        } catch (UnknownHostException e) {
+            System.err.println("HOST NOT FOUND : " + SERVER_HOST + ":" + SERVER_PORT);
+        } catch (IOException e) {
+            System.err.println("Server Connection Failed : " + SERVER_HOST + ":" + SERVER_PORT);
+        }
+
     }
 
     public void btnDownloadOnAction(ActionEvent actionEvent) {
@@ -147,7 +175,7 @@ public class FileTransferSceneController {
             String iconPath = "";
             if (fileMimeType == null) {
                 iconPath = Icons.getPath(Icons.IconType.DEFAULT);
-            }else if (MIME_TYPE_PDF.equals(fileMimeType)) {
+            } else if (MIME_TYPE_PDF.equals(fileMimeType)) {
                 iconPath = Icons.getPath(Icons.IconType.ICON_PDF);
             } else if (isImage(fileMimeType, MIME_TYPE_IMAGES)) {
                 iconPath = Icons.getPath(Icons.IconType.ICON_IMAGE);

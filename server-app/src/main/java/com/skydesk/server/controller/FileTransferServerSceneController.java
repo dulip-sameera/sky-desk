@@ -11,6 +11,7 @@ public class FileTransferServerSceneController {
 
     public void initialize() {
         File saveLocation = new File(System.getProperty("user.home") + "/Downloads/SkyDesk");
+        saveLocation.mkdirs();
 
 
         try {
