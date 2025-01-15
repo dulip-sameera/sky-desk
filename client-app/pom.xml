@@ -32,6 +32,17 @@
             <artifactId>javafx-controls</artifactId>
             <version>23</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+    </dependencies>
 </project>
