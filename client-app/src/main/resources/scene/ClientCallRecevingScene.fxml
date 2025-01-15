@@ -4,12 +4,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.ClientCallRecevingScene">
    <children>
-      <Button layoutX="73.0" layoutY="316.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="201.0" text="Answer" />
-      <Button layoutX="339.0" layoutY="316.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="201.0" text="Decline" />
+      <Button layoutX="73.0" layoutY="316.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="201.0" text="Answer" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
+         </font></Button>
+      <Button layoutX="339.0" layoutY="316.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="201.0" text="Decline" textFill="WHITE">
+         <font>
+            <Font size="27.0" />
+         </font></Button>
       <Label layoutX="200.0" layoutY="89.0" prefHeight="53.0" prefWidth="201.0" text="Calling Form ....." />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="117.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="187.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

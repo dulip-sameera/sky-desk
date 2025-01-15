@@ -12,6 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.TargetDataLine;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;
@@ -43,35 +47,18 @@ public class ClientVideoController {
         clientThread.start();
     }
 
+    //audio capture////////////////////////
+    public void audioCapture() throws LineUnavailableException {
+        AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
+        TargetDataLine microphone = AudioSystem.getTargetDataLine(format);
+        microphone.open(format);
+        microphone.start();
+
+    }
+    //end audio capture////////////////////////
+
     // Client Screen Display
     public void clientDisplay() {
-        /// ////////////////////////////////
-//        try {
-//            // Create a server socket listening on port 5051
-//            ServerSocket serverSocket = new ServerSocket(6060);
-//            System.out.println("Server is waiting for a client...");
-//
-//            // Accept a client connection
-//            Socket clientSocket = serverSocket.accept();
-//            System.out.println("Client connected: " + clientSocket.getRemoteSocketAddress());
-//
-//            // Create a PrintWriter to send data to the client
-//            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);  // Auto-flush enabled
-//
-//            // Send a simple text message to the client
-//            String message = "Hello from the server!";
-//            writer.println(message);
-//            System.out.println("Message sent to client: " + message);
-//
-//            // Close resources
-//            writer.close();
-//            clientSocket.close();
-//            serverSocket.close();
-//
-//        } catch (IOException e) {
-//            System.err.println("Error in server communication: " + e.getMessage());
-//        }
-        ////////////////////////////
 
         imgCamera.fitWidthProperty().bind(root.widthProperty());
         imgCamera.fitHeightProperty().bind(root.heightProperty());
