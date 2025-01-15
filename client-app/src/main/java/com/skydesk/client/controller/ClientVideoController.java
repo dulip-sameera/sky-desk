@@ -12,14 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.TargetDataLine;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
 public class ClientVideoController {
 
@@ -47,15 +43,69 @@ public class ClientVideoController {
         clientThread.start();
     }
 
-    //audio capture////////////////////////
-    public void audioCapture() throws LineUnavailableException {
-        AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
-        TargetDataLine microphone = AudioSystem.getTargetDataLine(format);
-        microphone.open(format);
-        microphone.start();
+    //audio capture and send////////////////////////
+    public void audioCapture() throws LineUnavailableException, IOException {
+        try {
+            // Define audio format
+            AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
+            TargetDataLine microphone = AudioSystem.getTargetDataLine(format);
 
+            // Open and start the microphone
+            microphone.open(format);
+            microphone.start();
+            System.out.println("Microphone started...");
+
+            // Buffer for audio data
+            byte[] buffer = new byte[4096];
+
+            // Create a DatagramSocket for sending audio
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress receiverAddress = InetAddress.getByName("192.168.1.100"); // Replace with receiver's IP
+            int port = 12345; // Match the receiver's port
+
+            // Capture and send audio data
+            while (true) {
+                int bytesRead = microphone.read(buffer, 0, buffer.length);
+                if (bytesRead > 0) {
+                    DatagramPacket packet = new DatagramPacket(buffer, bytesRead, receiverAddress, port);
+                    socket.send(packet);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     //end audio capture////////////////////////
+
+    ////////audio play
+    public void audioPlay() throws SocketException {
+        try {
+            // Define audio format
+            AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
+            SourceDataLine speakers = AudioSystem.getSourceDataLine(format);
+
+            // Open and start the speakers
+            speakers.open(format);
+            speakers.start();
+            System.out.println("Speakers started...");
+
+            // Create a DatagramSocket for receiving audio
+            DatagramSocket socket = new DatagramSocket(12345); // Match sender's port
+            byte[] buffer = new byte[4096];
+
+            // Receive and play audio data
+            while (true) {
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                socket.receive(packet);
+                speakers.write(packet.getData(), 0, packet.getLength());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    ////end audio play
+
+
 
     // Client Screen Display
     public void clientDisplay() {
