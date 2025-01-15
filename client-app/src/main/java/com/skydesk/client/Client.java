@@ -51,7 +51,7 @@ public class Client {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = bis.read(buffer)) != -1) {
-                byte[] chunk = new byte[bytesRead];
+                byte[] chunk = new byte[1024];
                 System.arraycopy(buffer, 0, chunk, 0, bytesRead);
                 oos.writeObject(new FileShareProtocol(file.getName(), file.length(), chunk));
                 oos.flush();
