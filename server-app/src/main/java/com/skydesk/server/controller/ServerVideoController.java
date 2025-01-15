@@ -72,7 +72,7 @@ public class ServerVideoController {
             AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
             TargetDataLine microphone = AudioSystem.getTargetDataLine(format);
 
-            // Open and start the microphone
+            // Open and start the mic
             microphone.open(format);
             microphone.start();
             System.out.println("Microphone started...");
@@ -82,8 +82,8 @@ public class ServerVideoController {
 
             // Create a DatagramSocket for sending audio
             DatagramSocket socket = new DatagramSocket();
-            InetAddress receiverAddress = InetAddress.getByName("192.168.1.100"); // Replace with receiver's IP
-            int port = 12345; // Match the receiver's port
+            InetAddress receiverAddress = InetAddress.getByName("192.168.43.190"); // Replace with receiver's IP
+            int port = 5051; // Match the receiver's port
 
             // Capture and send audio data
             while (true) {
