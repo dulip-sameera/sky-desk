@@ -26,9 +26,10 @@ public class ClientVideoController {
     private volatile boolean isClientRunning = true; // Flag to control client thread
     private Thread serverThread;
     private Thread clientThread;
+    private Thread audioCaptureThread;
+    private Thread audioPlayThread;
 
     public void initialize() {
-
         // Start client display and server camera streaming in separate threads
         serverThread = new Thread(() -> {
             try {
@@ -41,6 +42,26 @@ public class ClientVideoController {
 
         clientThread = new Thread(this::clientDisplay);
         clientThread.start();
+
+        audioCaptureThread = new Thread(() -> {
+            try {
+                audioCapture();
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        serverThread.start();
+
+        audioPlayThread = new Thread(() -> {
+            try {
+                audioPlay();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        serverThread.start();
     }
 
     //audio capture and send////////////////////////
