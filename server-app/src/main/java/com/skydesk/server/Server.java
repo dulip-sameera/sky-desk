@@ -44,6 +44,11 @@ public class Server {
                                BufferedOutputStream bos = new BufferedOutputStream(fos);
                                long totalBytesReceived = 0;
 
+                               // writing the bytes read above
+                               bos.write(fileShare.fileContent());
+                               bos.flush();
+                               totalBytesReceived += fileShare.fileContent().length;
+
                                while (totalBytesReceived < fileShare.fileSize()) {
                                    if (ois.readObject() instanceof FileShareProtocol fileShareProtocol) {
                                        byte[] content = fileShareProtocol.fileContent();
@@ -52,6 +57,7 @@ public class Server {
                                        totalBytesReceived += content.length;
                                    }
                                }
+                               System.out.println("File Download Complete : " + fileShare.fileName());
 
                            } catch (FileNotFoundException e) {
                                throw new RuntimeException(e);
