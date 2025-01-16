@@ -48,9 +48,10 @@ public class Client {
             FileInputStream fis = new FileInputStream(filePath);
             BufferedInputStream bis = new BufferedInputStream(fis);
 
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = bis.read(buffer)) != -1) {
+            int bytesRead = 0;
+            while (bytesRead != -1) {
+                byte[] buffer = new byte[1024];
+                bytesRead = bis.read(buffer);
 //                byte[] chunk = new byte[1024];
 //                System.arraycopy(buffer, 0, chunk, 0, bytesRead);
                 oos.writeObject(new FileShareProtocol(file.getName(), file.length(), buffer));

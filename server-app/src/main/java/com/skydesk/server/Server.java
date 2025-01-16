@@ -29,6 +29,7 @@ public class Server {
             while (true) {
                 try {
                     localSocket = serverSocket.accept();
+                    System.out.println("Accepted connection from " + localSocket.getRemoteSocketAddress());
                     BufferedInputStream bis = new BufferedInputStream(localSocket.getInputStream());
                     ObjectInputStream ois = new ObjectInputStream(bis);
 
@@ -68,10 +69,11 @@ public class Server {
                            }
                        }).start();
                     }
-
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+
+                System.out.println("Server is listening on port " + PORT);
 
             }
 
