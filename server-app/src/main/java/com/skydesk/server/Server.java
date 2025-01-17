@@ -27,51 +27,66 @@ public class Server {
             System.out.println("Server is listening on port " + port);
 
             while (true) {
-                try {
+               // try {
                     localSocket = serverSocket.accept();
                     System.out.println("Accepted connection from " + localSocket.getRemoteSocketAddress());
                     BufferedInputStream bis = new BufferedInputStream(localSocket.getInputStream());
                     ObjectInputStream ois = new ObjectInputStream(bis);
 
 
-                    Object respond = ois.readObject();
+                    new Thread(()-> {
+                        while (true) {
+                            try {
+                                Object respond = ois.readObject();
 
-                    // file share download file
-                    if (respond instanceof FileShareProtocol fileShare) {
-                       new Thread(() -> {
-                           File file = new File(fileDownloadPath, fileShare.fileName());
-                           try {
-                               FileOutputStream fos = new FileOutputStream(file);
-                               BufferedOutputStream bos = new BufferedOutputStream(fos);
-                               long totalBytesReceived = 0;
+                                // file share download file
+                                if (respond instanceof FileShareProtocol fileShare) {
+                                    //new Thread(() -> {
+                                    File file = new File(fileDownloadPath, fileShare.fileName());
+                                    try {
+                                        FileOutputStream fos = new FileOutputStream(file);
+                                        BufferedOutputStream bos = new BufferedOutputStream(fos);
 
-                               // writing the bytes read above
-                               bos.write(fileShare.fileContent());
-                               bos.flush();
-                               totalBytesReceived += fileShare.fileContent().length;
+                                        //long totalBytesReceived = 0;
 
-                               while (totalBytesReceived < fileShare.fileSize()) {
-                                   if (ois.readObject() instanceof FileShareProtocol fileShareProtocol) {
-                                       byte[] content = fileShareProtocol.fileContent();
-                                       bos.write(content);
-                                       bos.flush();
-                                       totalBytesReceived += content.length;
-                                   }
-                               }
-                               System.out.println("File Download Complete : " + fileShare.fileName());
+                                        bos.write(fileShare.fileContent());
+                                        System.out.println(fileShare);
+                                        while (ois.readObject() instanceof FileShareProtocol fileShare2){
+                                            //if (ois.readObject() instanceof FileShareProtocol fileShareProtocol) {
+                                                // writing the bytes read above
+                                                bos.write(fileShare2.fileContent());
+                                                bos.flush();
+                                            //}
+                                        }
 
-                           } catch (FileNotFoundException e) {
-                               throw new RuntimeException(e);
-                           } catch (IOException e) {
-                               throw new RuntimeException(e);
-                           } catch (ClassNotFoundException e) {
-                               throw new RuntimeException(e);
-                           }
-                       }).start();
-                    }
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+//                                        while (totalBytesReceived < fileShare.fileSize()) {
+//                                            //if (ois.readObject() instanceof FileShareProtocol fileShareProtocol) {
+//                                                byte[] content = fileShare.fileContent();
+//                                                bos.write(content);
+//                                                bos.flush();
+//                                                totalBytesReceived += content.length;
+//                                           // }
+//                                        }
+                                        System.out.println("File Download Complete : " + fileShare.fileName());
+
+                                    } catch (FileNotFoundException e) {
+                                        throw new RuntimeException(e);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    //}).start();
+                                }
+                            } catch (Exception e) {
+                                if (e instanceof EOFException) break;
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }).start();
+//                } catch (ClassNotFoundException e) {
+//                    throw new RuntimeException(e);
+//                }
+
+
 
                 System.out.println("Server is listening on port " + PORT);
 
