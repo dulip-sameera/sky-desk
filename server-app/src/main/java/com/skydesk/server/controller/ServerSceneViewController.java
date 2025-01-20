@@ -1,15 +1,55 @@
 package com.skydesk.server.controller;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.BindException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ServerSceneViewController {
+
+    public TextField txtRemoteIp;
+    public Button btnConnect;
+    public TextField txtMyIp;
+
+    public void initialize() {
+        txtMyIp.setText(getWiFiIPAddress());
+    }
+
+    public static String getWiFiIPAddress() {
+        try {
+            Process process = Runtime.getRuntime().exec("ifconfig");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            String line;
+            StringBuilder output = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            Pattern pattern = Pattern.compile("wlp3s0:.*?\\n\\s*inet (\\d+\\.\\d+\\.\\d+\\.\\d+)");
+            Matcher matcher = pattern.matcher(output.toString());
+
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Unable to retrieve IP address";
+    }
 
     public static void main(String[] args) throws IOException {
 
@@ -104,5 +144,8 @@ public class ServerSceneViewController {
             }).start();
 
         }
+    }
+
+    public void btnConnectOnAction(ActionEvent actionEvent) {
     }
 }
