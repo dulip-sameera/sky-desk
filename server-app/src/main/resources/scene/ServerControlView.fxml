@@ -14,7 +14,7 @@
       </ImageView>
       <Pane layoutX="55.0" layoutY="72.0" prefHeight="161.0" prefWidth="229.0" style="-fx-background-color: #3BB9FF;" styleClass="styled-pane">
          <children>
-            <TextField fx:id="txtMyIp" layoutX="34.0" layoutY="81.0" promptText="Enter Your Address" />
+            <TextField fx:id="txtMyIp" editable="false" layoutX="34.0" layoutY="81.0" promptText="Enter Your Address" />
             <Text fill="WHITE" layoutX="27.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Address:">
                <font>
                   <Font size="20.0" />

@@ -24,6 +24,7 @@ public class ServerSceneViewController {
 
     public void initialize() {
         txtMyIp.setText(getWiFiIPAddress());
+        btnConnect.requestFocus();
     }
 
     public static String getWiFiIPAddress() {

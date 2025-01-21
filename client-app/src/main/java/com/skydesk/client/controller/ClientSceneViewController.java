@@ -23,8 +23,6 @@ public class ClientSceneViewController {
         txtInput.prefWidthProperty().bind(root.widthProperty());
         txtInput.prefWidthProperty().bind(root.heightProperty());
 
-
-
         socket = new Socket("127.0.0.1", 9090);
         System.out.println("Connected Successfully");
 
