@@ -79,43 +79,7 @@ public class FileTransferSceneController {
     }
 
     public void btnUploadOnAction(ActionEvent actionEvent) {
-        Client.sendFile(selectedFile.getAbsolutePath());
-//        try {
-//            Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
-//            OutputStream os = socket.getOutputStream();
-//            BufferedOutputStream bos = new BufferedOutputStream(os);
-//            ObjectOutputStream oos = new ObjectOutputStream(bos);
-//
-//            new Thread(() -> {
-//                try {
-//                    FileInputStream fis = new FileInputStream(selectedFile);
-//                    BufferedInputStream bis = new BufferedInputStream(fis);
-//
-//                    String fileName = selectedFile.getName();
-//                    long fileSize = selectedFile.length();
-//                    while (true) {
-//                        byte[] buffer = new byte[1024];
-//                        int read = bis.read(buffer);
-//                        if (read == -1) break;
-//                        oos.writeObject(new FileShareProtocol(fileName, fileSize, buffer));
-//                        oos.flush();
-//                        btnUpload.setDisable(true);
-//                    }
-//                    btnUpload.setDisable(false);
-//                } catch (FileNotFoundException e) {
-//                    System.err.println("File Not Found");
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    System.err.println("File error while uploading");
-//                    e.printStackTrace();
-//                }
-//            }).start();
-//
-//        } catch (UnknownHostException e) {
-//            System.err.println("HOST NOT FOUND : " + SERVER_HOST + ":" + SERVER_PORT);
-//        } catch (IOException e) {
-//            System.err.println("Server Connection Failed : " + SERVER_HOST + ":" + SERVER_PORT);
-//        }
+        new Thread(() -> Client.sendFile(selectedFile.getAbsolutePath())).start();
     }
 
     public void btnDownloadOnAction(ActionEvent actionEvent) {

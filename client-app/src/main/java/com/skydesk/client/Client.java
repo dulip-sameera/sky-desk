@@ -10,6 +10,7 @@ public class Client {
     private static int PORT = 8080;
     private static Socket socket;
     private static ObjectOutputStream oos;
+
     public static void connect() {
         connect(HOST, PORT);
     }
