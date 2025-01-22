@@ -18,7 +18,7 @@ public class ScreenShareInitializer extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Skydesk");
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/ScreenShareScene.fxml"))));
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/scene/Ui.fxml"))));
         primaryStage.show();
         primaryStage.setFullScreen(false);
 

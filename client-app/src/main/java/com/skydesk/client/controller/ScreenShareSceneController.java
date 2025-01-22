@@ -23,7 +23,7 @@ public class ScreenShareSceneController {
     private ObjectOutputStream oos;
 
     public void initialize() throws IOException {
-        socket = new Socket("192.168.8.140", 9090);
+        socket = new Socket("192.168.8.106", 9090);
 //        socket = new Socket("127.0.0.1", 9090);
         OutputStream os = socket.getOutputStream();
         BufferedOutputStream bos = new BufferedOutputStream(os);

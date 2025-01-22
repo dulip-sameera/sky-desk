@@ -13,6 +13,7 @@ import java.net.Socket;
 public class ServerAppInitializer {
     public static void main(String[] args) throws Exception {
         ServerSocket serverSocket = new ServerSocket(9090);
+        //DesktopColor.revertDesktop();
         System.out.println("Server started on port 9090");
         System.out.println("Waiting for connections...");
         Socket localSocket = serverSocket.accept();
