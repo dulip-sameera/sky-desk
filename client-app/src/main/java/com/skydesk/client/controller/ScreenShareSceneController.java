@@ -3,6 +3,7 @@ package com.skydesk.client.controller;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -17,6 +18,7 @@ import java.net.Socket;
 public class ScreenShareSceneController {
     public AnchorPane root;
     public ImageView imgScreen;
+    public TextField txtInput;
     private Socket socket;
     public volatile int screenWidth = 1366;
     public volatile int screenHeight = 768;
@@ -36,6 +38,9 @@ public class ScreenShareSceneController {
 
         //imgScreen.fitWidthProperty().bind(root.widthProperty());
         //imgScreen.fitHeightProperty().bind(root.heightProperty());
+
+        txtInput.prefWidthProperty().bind(root.widthProperty());
+        txtInput.prefWidthProperty().bind(root.heightProperty());
 
         imgScreen.setOnMouseMoved(mouseEvent -> {
             try {
@@ -100,6 +105,15 @@ public class ScreenShareSceneController {
             try {
                 double deltaY = scrollEvent.getDeltaY();
                 oos.writeObject(deltaY); // Send scroll delta
+                oos.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        txtInput.setOnKeyPressed(keyEvent -> {
+            try {
+                oos.writeObject(keyEvent.getText());
                 oos.flush();
             } catch (Exception e) {
                 e.printStackTrace();

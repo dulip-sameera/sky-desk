@@ -5,6 +5,7 @@ import com.skydesk.shared.util.DesktopColor;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;
@@ -86,6 +87,9 @@ public class ServerAppInitializer {
                             case "MIDDLE_RELEASE":
                                 robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
                                 break;
+                            default:
+                                KeyEvent.getExtendedKeyCodeForChar(button.charAt(0));
+                                robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(button.charAt(0)));
                         }
                     } else if (event instanceof Double scrollAmount) {
                         robot.mouseWheel((int) (double) scrollAmount);
